@@ -1,0 +1,212 @@
+/* Ministr0 Dev — Killstreak UI | discord.gg/4eh8 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    background: transparent;
+    color: #fff;
+    user-select: none;
+}
+
+#killstreak-container {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+#killstreak-container.show { opacity: 1; }
+
+#killstreak-title {
+    font-size: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.3), 0 4px 8px rgba(0,0,0,0.8);
+    margin-bottom: 8px;
+}
+
+#killstreak-subtitle {
+    font-size: 22px;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    opacity: 0.9;
+}
+
+#killstreak-counter {
+    font-size: 72px;
+    font-weight: 900;
+    opacity: 0.3;
+    position: absolute;
+    top: -20px;
+    right: -60px;
+    text-shadow: 0 0 40px rgba(255,255,255,0.2);
+}
+
+#killfeed-container {
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    width: 300px;
+    z-index: 999;
+}
+
+.killfeed-entry {
+    background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,20,20,0.6));
+    border-left: 3px solid #ff6b35;
+    padding: 6px 12px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 0 4px 4px 0;
+    animation: killfeedSlide 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.killfeed-entry .killer { color: #ff6b35; font-weight: 700; }
+.killfeed-entry .weapon { color: #aaa; font-size: 11px; margin: 0 4px; }
+.killfeed-entry .victim { color: #fff; }
+
+.killfeed-entry .streak-badge {
+    background: #ff6b35;
+    color: #000;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 10px;
+}
+
+@keyframes killfeedSlide {
+    from { transform: translateX(100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+#notification-container {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    z-index: 1001;
+}
+
+.notification-item {
+    background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(20,20,20,0.7));
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    animation: notifSlide 0.3s ease;
+    border-left: 4px solid #3498db;
+    min-width: 250px;
+    max-width: 350px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.notification-item.success { border-left-color: #2ecc71; }
+.notification-item.error { border-left-color: #e74c3c; }
+.notification-item.info { border-left-color: #3498db; }
+.notification-item.warning { border-left-color: #f39c12; }
+
+@keyframes notifSlide {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+#leaderboard-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, rgba(0,0,0,0.92), rgba(10,10,10,0.85));
+    border: 2px solid rgba(255,107,53,0.4);
+    border-radius: 12px;
+    padding: 30px 40px;
+    min-width: 400px;
+    max-width: 500px;
+    z-index: 2000;
+    display: none;
+    box-shadow: 0 0 60px rgba(255,107,53,0.15);
+}
+
+#leaderboard-container.show {
+    display: block;
+    animation: lbFadeIn 0.4s ease;
+}
+
+@keyframes lbFadeIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+#leaderboard-header {
+    font-size: 22px;
+    font-weight: 800;
+    text-align: center;
+    color: #ff6b35;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+#leaderboard-body { margin-bottom: 16px; }
+
+.lb-entry {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.2s;
+}
+
+.lb-entry:hover { background: rgba(255,107,53,0.08); }
+
+.lb-entry .rank {
+    font-size: 18px;
+    font-weight: 800;
+    width: 40px;
+    text-align: center;
+    color: #ff6b35;
+}
+
+.lb-entry .name { flex: 1; font-size: 15px; font-weight: 500; margin-left: 12px; }
+.lb-entry .streak { font-size: 16px; font-weight: 700; color: #ff6b35; }
+.lb-entry .streak::before { content: '⚡ '; }
+
+#leaderboard-footer {
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 12px;
+    letter-spacing: 1px;
+}
+
+#watermark {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.12);
+    letter-spacing: 1px;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+@media (max-width: 768px) {
+    #killstreak-title { font-size: 32px; }
+    #killstreak-subtitle { font-size: 16px; }
+    #killstreak-counter { font-size: 48px; right: -40px; }
+    #leaderboard-container { min-width: 300px; padding: 20px; }
+}
